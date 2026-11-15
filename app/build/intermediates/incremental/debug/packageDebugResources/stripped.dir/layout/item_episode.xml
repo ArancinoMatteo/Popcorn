@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp">
+
+    <!-- Thumbnail with Play Icon -->
+    <FrameLayout
+        android:layout_width="110dp"
+        android:layout_height="65dp">
+
+        <ImageView
+            android:id="@+id/iv_episode_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/netflix_card_bg"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app_name" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_circle_number"
+            android:padding="6dp"
+            android:src="@android:drawable/ic_media_play"
+            app:tint="@color/white"
+            android:contentDescription="@string/play" />
+
+    </FrameLayout>
+
+    <!-- Episode Title & Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_episode_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="1. Episodio 1" />
+
+        <TextView
+            android:id="@+id/tv_episode_filename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            tools:text="Stranger.Things.S01E01.mp4" />
+
+    </LinearLayout>
+
+</LinearLayout>
