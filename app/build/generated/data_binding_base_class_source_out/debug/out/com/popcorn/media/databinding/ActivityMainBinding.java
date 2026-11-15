@@ -6,16 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.popcorn.media.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -23,7 +24,10 @@ import java.lang.String;
 
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
-  private final CoordinatorLayout rootView;
+  private final RelativeLayout rootView;
+
+  @NonNull
+  public final BottomNavigationView bottomNavigation;
 
   @NonNull
   public final MaterialButton btnImportEmpty;
@@ -32,7 +36,10 @@ public final class ActivityMainBinding implements ViewBinding {
   public final ImageButton btnImportFolder;
 
   @NonNull
-  public final ImageButton btnSettings;
+  public final ImageButton btnTopSettings;
+
+  @NonNull
+  public final TextInputEditText etSearchQuery;
 
   @NonNull
   public final ItemHeroBinding heroBanner;
@@ -44,39 +51,47 @@ public final class ActivityMainBinding implements ViewBinding {
   public final LinearLayout llScanProgress;
 
   @NonNull
+  public final LinearLayout llSearchContainer;
+
+  @NonNull
   public final RecyclerView rvMainRows;
 
   @NonNull
   public final SwipeRefreshLayout swipeRefresh;
 
   @NonNull
-  public final Toolbar toolbar;
+  public final LinearLayout topHeader;
 
   @NonNull
   public final TextView tvScanStatus;
 
-  private ActivityMainBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull MaterialButton btnImportEmpty, @NonNull ImageButton btnImportFolder,
-      @NonNull ImageButton btnSettings, @NonNull ItemHeroBinding heroBanner,
+  private ActivityMainBinding(@NonNull RelativeLayout rootView,
+      @NonNull BottomNavigationView bottomNavigation, @NonNull MaterialButton btnImportEmpty,
+      @NonNull ImageButton btnImportFolder, @NonNull ImageButton btnTopSettings,
+      @NonNull TextInputEditText etSearchQuery, @NonNull ItemHeroBinding heroBanner,
       @NonNull LinearLayout llEmptyState, @NonNull LinearLayout llScanProgress,
-      @NonNull RecyclerView rvMainRows, @NonNull SwipeRefreshLayout swipeRefresh,
-      @NonNull Toolbar toolbar, @NonNull TextView tvScanStatus) {
+      @NonNull LinearLayout llSearchContainer, @NonNull RecyclerView rvMainRows,
+      @NonNull SwipeRefreshLayout swipeRefresh, @NonNull LinearLayout topHeader,
+      @NonNull TextView tvScanStatus) {
     this.rootView = rootView;
+    this.bottomNavigation = bottomNavigation;
     this.btnImportEmpty = btnImportEmpty;
     this.btnImportFolder = btnImportFolder;
-    this.btnSettings = btnSettings;
+    this.btnTopSettings = btnTopSettings;
+    this.etSearchQuery = etSearchQuery;
     this.heroBanner = heroBanner;
     this.llEmptyState = llEmptyState;
     this.llScanProgress = llScanProgress;
+    this.llSearchContainer = llSearchContainer;
     this.rvMainRows = rvMainRows;
     this.swipeRefresh = swipeRefresh;
-    this.toolbar = toolbar;
+    this.topHeader = topHeader;
     this.tvScanStatus = tvScanStatus;
   }
 
   @Override
   @NonNull
-  public CoordinatorLayout getRoot() {
+  public RelativeLayout getRoot() {
     return rootView;
   }
 
@@ -101,6 +116,12 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.bottom_navigation;
+      BottomNavigationView bottomNavigation = ViewBindings.findChildViewById(rootView, id);
+      if (bottomNavigation == null) {
+        break missingId;
+      }
+
       id = R.id.btn_import_empty;
       MaterialButton btnImportEmpty = ViewBindings.findChildViewById(rootView, id);
       if (btnImportEmpty == null) {
@@ -113,9 +134,15 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btn_settings;
-      ImageButton btnSettings = ViewBindings.findChildViewById(rootView, id);
-      if (btnSettings == null) {
+      id = R.id.btn_top_settings;
+      ImageButton btnTopSettings = ViewBindings.findChildViewById(rootView, id);
+      if (btnTopSettings == null) {
+        break missingId;
+      }
+
+      id = R.id.et_search_query;
+      TextInputEditText etSearchQuery = ViewBindings.findChildViewById(rootView, id);
+      if (etSearchQuery == null) {
         break missingId;
       }
 
@@ -138,6 +165,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.ll_search_container;
+      LinearLayout llSearchContainer = ViewBindings.findChildViewById(rootView, id);
+      if (llSearchContainer == null) {
+        break missingId;
+      }
+
       id = R.id.rv_main_rows;
       RecyclerView rvMainRows = ViewBindings.findChildViewById(rootView, id);
       if (rvMainRows == null) {
@@ -150,9 +183,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.toolbar;
-      Toolbar toolbar = ViewBindings.findChildViewById(rootView, id);
-      if (toolbar == null) {
+      id = R.id.top_header;
+      LinearLayout topHeader = ViewBindings.findChildViewById(rootView, id);
+      if (topHeader == null) {
         break missingId;
       }
 
@@ -162,9 +195,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((CoordinatorLayout) rootView, btnImportEmpty, btnImportFolder,
-          btnSettings, binding_heroBanner, llEmptyState, llScanProgress, rvMainRows, swipeRefresh,
-          toolbar, tvScanStatus);
+      return new ActivityMainBinding((RelativeLayout) rootView, bottomNavigation, btnImportEmpty,
+          btnImportFolder, btnTopSettings, etSearchQuery, binding_heroBanner, llEmptyState,
+          llScanProgress, llSearchContainer, rvMainRows, swipeRefresh, topHeader, tvScanStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

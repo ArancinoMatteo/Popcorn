@@ -60,7 +60,8 @@ public class MediaDetailBottomSheet extends BottomSheetDialogFragment {
         ImageView ivBackdrop = view.findViewById(R.id.iv_detail_backdrop);
         ImageButton btnClose = view.findViewById(R.id.btn_close_detail);
         TextView tvTitle = view.findViewById(R.id.tv_detail_title);
-        TextView tvMeta = view.findViewById(R.id.tv_detail_meta);
+        TextView tvMatch = view.findViewById(R.id.tv_detail_match);
+        TextView tvYear = view.findViewById(R.id.tv_detail_year);
         TextView tvOverview = view.findViewById(R.id.tv_detail_overview);
         MaterialButton btnPlay = view.findViewById(R.id.btn_detail_play);
         LinearLayout llEpisodesSection = view.findViewById(R.id.ll_episodes_section);
@@ -75,11 +76,16 @@ public class MediaDetailBottomSheet extends BottomSheetDialogFragment {
 
                     tvTitle.setText(item.getTitle() != null ? item.getTitle() : item.getFileName());
 
-                    StringBuilder meta = new StringBuilder();
-                    if (item.getYear() != null) meta.append(item.getYear()).append(" • ");
-                    if (item.getRating() > 0) meta.append("★ ").append(String.format("%.1f", item.getRating())).append(" • ");
-                    meta.append("TV_SHOW".equals(item.getType()) ? "Serie TV" : "Film");
-                    tvMeta.setText(meta.toString());
+                    if (item.getRating() > 0) {
+                        int percent = (int) Math.min(99, Math.max(70, item.getRating() * 10));
+                        tvMatch.setText(percent + "% Compatibile");
+                    } else {
+                        tvMatch.setText("98% Compatibile");
+                    }
+
+                    if (tvYear != null) {
+                        tvYear.setText(item.getYear() != null ? item.getYear() : "2024");
+                    }
 
                     tvOverview.setText(item.getOverview() != null && !item.getOverview().isEmpty()
                             ? item.getOverview()

@@ -40,7 +40,7 @@ public final class BottomSheetMediaDetailBinding implements ViewBinding {
   public final RecyclerView rvEpisodes;
 
   @NonNull
-  public final TextView tvDetailMeta;
+  public final TextView tvDetailMatch;
 
   @NonNull
   public final TextView tvDetailOverview;
@@ -48,20 +48,25 @@ public final class BottomSheetMediaDetailBinding implements ViewBinding {
   @NonNull
   public final TextView tvDetailTitle;
 
+  @NonNull
+  public final TextView tvDetailYear;
+
   private BottomSheetMediaDetailBinding(@NonNull NestedScrollView rootView,
       @NonNull ImageButton btnCloseDetail, @NonNull MaterialButton btnDetailPlay,
       @NonNull ImageView ivDetailBackdrop, @NonNull LinearLayout llEpisodesSection,
-      @NonNull RecyclerView rvEpisodes, @NonNull TextView tvDetailMeta,
-      @NonNull TextView tvDetailOverview, @NonNull TextView tvDetailTitle) {
+      @NonNull RecyclerView rvEpisodes, @NonNull TextView tvDetailMatch,
+      @NonNull TextView tvDetailOverview, @NonNull TextView tvDetailTitle,
+      @NonNull TextView tvDetailYear) {
     this.rootView = rootView;
     this.btnCloseDetail = btnCloseDetail;
     this.btnDetailPlay = btnDetailPlay;
     this.ivDetailBackdrop = ivDetailBackdrop;
     this.llEpisodesSection = llEpisodesSection;
     this.rvEpisodes = rvEpisodes;
-    this.tvDetailMeta = tvDetailMeta;
+    this.tvDetailMatch = tvDetailMatch;
     this.tvDetailOverview = tvDetailOverview;
     this.tvDetailTitle = tvDetailTitle;
+    this.tvDetailYear = tvDetailYear;
   }
 
   @Override
@@ -121,9 +126,9 @@ public final class BottomSheetMediaDetailBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tv_detail_meta;
-      TextView tvDetailMeta = ViewBindings.findChildViewById(rootView, id);
-      if (tvDetailMeta == null) {
+      id = R.id.tv_detail_match;
+      TextView tvDetailMatch = ViewBindings.findChildViewById(rootView, id);
+      if (tvDetailMatch == null) {
         break missingId;
       }
 
@@ -139,9 +144,15 @@ public final class BottomSheetMediaDetailBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_detail_year;
+      TextView tvDetailYear = ViewBindings.findChildViewById(rootView, id);
+      if (tvDetailYear == null) {
+        break missingId;
+      }
+
       return new BottomSheetMediaDetailBinding((NestedScrollView) rootView, btnCloseDetail,
-          btnDetailPlay, ivDetailBackdrop, llEpisodesSection, rvEpisodes, tvDetailMeta,
-          tvDetailOverview, tvDetailTitle);
+          btnDetailPlay, ivDetailBackdrop, llEpisodesSection, rvEpisodes, tvDetailMatch,
+          tvDetailOverview, tvDetailTitle, tvDetailYear);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

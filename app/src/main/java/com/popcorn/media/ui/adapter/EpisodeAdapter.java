@@ -3,11 +3,13 @@ package com.popcorn.media.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.popcorn.media.R;
 import com.popcorn.media.data.local.entity.MediaItem;
 
@@ -55,21 +57,33 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvNumber;
+        final ImageView ivThumb;
         final TextView tvTitle;
         final TextView tvFilename;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNumber = itemView.findViewById(R.id.tv_episode_number);
+            ivThumb = itemView.findViewById(R.id.iv_episode_thumb);
             tvTitle = itemView.findViewById(R.id.tv_episode_title);
             tvFilename = itemView.findViewById(R.id.tv_episode_filename);
         }
 
         void bind(MediaItem item, OnEpisodeClickListener listener) {
-            tvNumber.setText(String.valueOf(item.getEpisodeNumber() > 0 ? item.getEpisodeNumber() : getAdapterPosition() + 1));
-            tvTitle.setText(item.getTitle() != null ? item.getTitle() : item.getFileName());
+            int epNum = item.getEpisodeNumber() > 0 ? item.getEpisodeNumber() : getAdapterPosition() + 1;
+            String name = item.getTitle() != null ? item.getTitle() : item.getFileName();
+            tvTitle.setText(epNum + ". " + name);
             tvFilename.setText(item.getFileName());
+
+            String imagePath = item.getBackdropPath() != null ? item.getBackdropPath() : item.getPosterPath();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                Glide.with(itemView.getContext())
+                        .load(imagePath)
+                        .placeholder(R.color.netflix_card_bg)
+                        .centerCrop()
+                        .into(ivThumb);
+            } else {
+                ivThumb.setImageResource(R.color.netflix_card_bg);
+            }
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

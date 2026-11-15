@@ -14,7 +14,7 @@
         <!-- Header Backdrop Container -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp">
+            android:layout_height="240dp">
 
             <ImageView
                 android:id="@+id/iv_detail_backdrop"
@@ -32,8 +32,8 @@
             <!-- Close Button -->
             <ImageButton
                 android:id="@+id/btn_close_detail"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="end|top"
                 android:layout_margin="16dp"
                 android:background="@drawable/bg_circle_number"
@@ -43,67 +43,108 @@
 
         </FrameLayout>
 
-        <!-- Main Details -->
+        <!-- Main Details Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
 
+            <!-- Title -->
             <TextView
                 android:id="@+id/tv_detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
-                tools:text="Inception" />
+                tools:text="Stranger Things" />
 
-            <TextView
-                android:id="@+id/tv_detail_meta"
+            <!-- Netflix Match & Meta Badges Line -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                tools:text="2010 • ★ 8.8 • Film" />
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <!-- Play Button -->
+                <!-- Match Percentage Badge (Green Netflix Style) -->
+                <TextView
+                    android:id="@+id/tv_detail_match"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="98% Compatibile"
+                    android:textColor="#46D369"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <!-- Year -->
+                <TextView
+                    android:id="@+id/tv_detail_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    tools:text="2024" />
+
+                <!-- Maturity Rating Box -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="#333333"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp"
+                    android:text="16+"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- HD Badge -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="#333333"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp"
+                    android:text="HD"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Full Width Red Play Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_detail_play"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/netflix_red"
+                android:backgroundTint="@color/white"
                 android:text="@string/play"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="4dp"
                 app:icon="@android:drawable/ic_media_play"
-                app:iconTint="@color/white" />
+                app:iconTint="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/overview"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
+            <!-- Overview Plot -->
             <TextView
                 android:id="@+id/tv_detail_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:lineSpacingExtra="3dp"
-                android:textColor="@color/text_secondary"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
-                tools:text="Un ladro che ruba segreti aziendali attraverso l'uso della tecnologia di condivisione dei sogni viene dato il compito inverso di piantare un'idea nella mente di un C.E.O." />
+                tools:text="Quando un bambino scompare, una piccola città svela un mistero che coinvolge esperimenti segreti, forze soprannaturali terrificanti e una strana ragazzina." />
 
-            <!-- Episodes Section for TV Shows -->
+            <!-- Episodes Section Header -->
             <LinearLayout
                 android:id="@+id/ll_episodes_section"
                 android:layout_width="match_parent"

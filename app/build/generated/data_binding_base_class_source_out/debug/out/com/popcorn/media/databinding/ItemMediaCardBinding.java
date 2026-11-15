@@ -30,12 +30,17 @@ public final class ItemMediaCardBinding implements ViewBinding {
   @NonNull
   public final TextView tvFallbackTitle;
 
+  @NonNull
+  public final TextView tvNBadge;
+
   private ItemMediaCardBinding(@NonNull CardView rootView, @NonNull ImageView ivPoster,
-      @NonNull ProgressBar pbWatchProgress, @NonNull TextView tvFallbackTitle) {
+      @NonNull ProgressBar pbWatchProgress, @NonNull TextView tvFallbackTitle,
+      @NonNull TextView tvNBadge) {
     this.rootView = rootView;
     this.ivPoster = ivPoster;
     this.pbWatchProgress = pbWatchProgress;
     this.tvFallbackTitle = tvFallbackTitle;
+    this.tvNBadge = tvNBadge;
   }
 
   @Override
@@ -83,8 +88,14 @@ public final class ItemMediaCardBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_n_badge;
+      TextView tvNBadge = ViewBindings.findChildViewById(rootView, id);
+      if (tvNBadge == null) {
+        break missingId;
+      }
+
       return new ItemMediaCardBinding((CardView) rootView, ivPoster, pbWatchProgress,
-          tvFallbackTitle);
+          tvFallbackTitle, tvNBadge);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

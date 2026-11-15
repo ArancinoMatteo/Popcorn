@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,13 +19,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.popcorn.media.R;
 import com.popcorn.media.data.local.AppDatabase;
 import com.popcorn.media.data.local.entity.MediaItem;
@@ -32,7 +35,6 @@ import com.popcorn.media.ui.adapter.MediaCardAdapter;
 import com.popcorn.media.ui.adapter.MediaRowAdapter;
 import com.popcorn.media.ui.detail.MediaDetailBottomSheet;
 import com.popcorn.media.ui.model.MediaRowItem;
-
 import com.popcorn.media.ui.player.PlayerActivity;
 import com.popcorn.media.ui.settings.SettingsActivity;
 
@@ -47,12 +49,19 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
     private TextView tvHeroTitle;
     private TextView tvHeroMeta;
     private MaterialButton btnHeroPlay;
-    private MaterialButton btnHeroInfo;
+    private LinearLayout btnHeroMyList;
+    private LinearLayout btnHeroInfoContainer;
+
+    private LinearLayout llSearchContainer;
+    private TextInputEditText etSearchQuery;
     private LinearLayout llEmptyState;
     private LinearLayout llScanProgress;
     private TextView tvScanStatus;
+    private BottomNavigationView bottomNavigation;
 
     private MediaItem currentHeroItem;
+    private String selectedFilter = "ALL"; // "ALL", "TV_SHOWS", "MOVIES"
+    private String searchQuery = "";
 
     private final ActivityResultLauncher<Uri> folderPickerLauncher =
             registerForActivityResult(new ActivityResultContracts.OpenDocumentTree(), uri -> {
@@ -78,12 +87,14 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
 
         initViews();
         setupRecyclerView();
+        setupBottomNavigation();
+        setupFilterChips();
         observeDatabase();
     }
 
     private void initViews() {
         ImageButton btnImportFolder = findViewById(R.id.btn_import_folder);
-        ImageButton btnSettings = findViewById(R.id.btn_settings);
+        ImageButton btnTopSettings = findViewById(R.id.btn_top_settings);
         MaterialButton btnImportEmpty = findViewById(R.id.btn_import_empty);
 
         heroBannerView = findViewById(R.id.hero_banner);
@@ -91,19 +102,26 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
         tvHeroTitle = findViewById(R.id.tv_hero_title);
         tvHeroMeta = findViewById(R.id.tv_hero_meta);
         btnHeroPlay = findViewById(R.id.btn_hero_play);
-        btnHeroInfo = findViewById(R.id.btn_hero_info);
+        btnHeroMyList = findViewById(R.id.btn_hero_my_list);
+        btnHeroInfoContainer = findViewById(R.id.btn_hero_info_container);
+
+        llSearchContainer = findViewById(R.id.ll_search_container);
+        etSearchQuery = findViewById(R.id.et_search_query);
 
         llEmptyState = findViewById(R.id.ll_empty_state);
         llScanProgress = findViewById(R.id.ll_scan_progress);
         tvScanStatus = findViewById(R.id.tv_scan_status);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
 
         btnImportFolder.setOnClickListener(v -> checkPermissionAndOpenPicker());
         btnImportEmpty.setOnClickListener(v -> checkPermissionAndOpenPicker());
 
-        btnSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        });
+        if (btnTopSettings != null) {
+            btnTopSettings.setOnClickListener(v -> {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+            });
+        }
 
         btnHeroPlay.setOnClickListener(v -> {
             if (currentHeroItem != null) {
@@ -113,12 +131,35 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
             }
         });
 
-        btnHeroInfo.setOnClickListener(v -> {
-            if (currentHeroItem != null) {
-                MediaDetailBottomSheet bottomSheet = MediaDetailBottomSheet.newInstance(currentHeroItem.getId());
-                bottomSheet.show(getSupportFragmentManager(), "media_detail");
-            }
-        });
+        if (btnHeroMyList != null) {
+            btnHeroMyList.setOnClickListener(v ->
+                    Toast.makeText(this, "Aggiunto alla tua Lista", Toast.LENGTH_SHORT).show());
+        }
+
+        if (btnHeroInfoContainer != null) {
+            btnHeroInfoContainer.setOnClickListener(v -> {
+                if (currentHeroItem != null) {
+                    MediaDetailBottomSheet bottomSheet = MediaDetailBottomSheet.newInstance(currentHeroItem.getId());
+                    bottomSheet.show(getSupportFragmentManager(), "media_detail");
+                }
+            });
+        }
+
+        if (etSearchQuery != null) {
+            etSearchQuery.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    searchQuery = s.toString().trim().toLowerCase();
+                    updateRows();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        }
     }
 
     private void setupRecyclerView() {
@@ -126,6 +167,62 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
         mainRowAdapter = new MediaRowAdapter(this);
         rvMainRows.setLayoutManager(new LinearLayoutManager(this));
         rvMainRows.setAdapter(mainRowAdapter);
+    }
+
+    private void setupBottomNavigation() {
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                llSearchContainer.setVisibility(View.GONE);
+                heroBannerView.setVisibility(View.VISIBLE);
+                selectedFilter = "ALL";
+                updateRows();
+                return true;
+            } else if (itemId == R.id.nav_search) {
+                llSearchContainer.setVisibility(View.VISIBLE);
+                heroBannerView.setVisibility(View.GONE);
+                if (etSearchQuery != null) etSearchQuery.requestFocus();
+                return true;
+            } else if (itemId == R.id.nav_library) {
+                checkPermissionAndOpenPicker();
+                return true;
+            } else if (itemId == R.id.nav_settings) {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void setupFilterChips() {
+        TextView chipTvShows = findViewById(R.id.tv_chip_tv_shows);
+        TextView chipMovies = findViewById(R.id.tv_chip_movies);
+        TextView chipAll = findViewById(R.id.tv_chip_all);
+
+        if (chipTvShows != null) {
+            chipTvShows.setOnClickListener(v -> {
+                selectedFilter = "TV_SHOWS";
+                Toast.makeText(this, "Filtro: Serie TV", Toast.LENGTH_SHORT).show();
+                updateRows();
+            });
+        }
+
+        if (chipMovies != null) {
+            chipMovies.setOnClickListener(v -> {
+                selectedFilter = "MOVIES";
+                Toast.makeText(this, "Filtro: Film", Toast.LENGTH_SHORT).show();
+                updateRows();
+            });
+        }
+
+        if (chipAll != null) {
+            chipAll.setOnClickListener(v -> {
+                selectedFilter = "ALL";
+                Toast.makeText(this, "Tutti i contenuti", Toast.LENGTH_SHORT).show();
+                updateRows();
+            });
+        }
     }
 
     private void observeDatabase() {
@@ -138,7 +235,9 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
                 mainRowAdapter.setRows(new ArrayList<>());
             } else {
                 llEmptyState.setVisibility(View.GONE);
-                heroBannerView.setVisibility(View.VISIBLE);
+                if (llSearchContainer.getVisibility() != View.VISIBLE) {
+                    heroBannerView.setVisibility(View.VISIBLE);
+                }
                 updateHeroBanner(allItems.get(0));
             }
         });
@@ -154,27 +253,54 @@ public class MainActivity extends AppCompatActivity implements MediaCardAdapter.
         AppDatabase db = AppDatabase.getInstance(this);
         List<MediaRowItem> rowItems = new ArrayList<>();
 
-        List<MediaItem> continueWatching = db.mediaDao().getContinueWatching().getValue();
+        List<MediaItem> continueWatching = filterItems(db.mediaDao().getContinueWatching().getValue());
         if (continueWatching != null && !continueWatching.isEmpty()) {
             rowItems.add(new MediaRowItem("🔴 Continua a guardare", continueWatching));
         }
 
-        List<MediaItem> recentlyAdded = db.mediaDao().getRecentlyAdded().getValue();
+        List<MediaItem> recentlyAdded = filterItems(db.mediaDao().getRecentlyAdded().getValue());
         if (recentlyAdded != null && !recentlyAdded.isEmpty()) {
             rowItems.add(new MediaRowItem("🍿 Aggiunti di recente", recentlyAdded));
         }
 
-        List<MediaItem> movies = db.mediaDao().getMovies().getValue();
-        if (movies != null && !movies.isEmpty()) {
-            rowItems.add(new MediaRowItem("🎬 Film", movies));
+        if (!"TV_SHOWS".equals(selectedFilter)) {
+            List<MediaItem> movies = filterItems(db.mediaDao().getMovies().getValue());
+            if (movies != null && !movies.isEmpty()) {
+                rowItems.add(new MediaRowItem("🎬 Film", movies));
+            }
         }
 
-        List<MediaItem> tvShows = db.mediaDao().getTvShows().getValue();
-        if (tvShows != null && !tvShows.isEmpty()) {
-            rowItems.add(new MediaRowItem("📺 Serie TV", tvShows));
+        if (!"MOVIES".equals(selectedFilter)) {
+            List<MediaItem> tvShows = filterItems(db.mediaDao().getTvShows().getValue());
+            if (tvShows != null && !tvShows.isEmpty()) {
+                rowItems.add(new MediaRowItem("📺 Serie TV", tvShows));
+            }
         }
 
         mainRowAdapter.setRows(rowItems);
+    }
+
+    private List<MediaItem> filterItems(List<MediaItem> inputList) {
+        if (inputList == null) return null;
+        List<MediaItem> filtered = new ArrayList<>();
+
+        for (MediaItem item : inputList) {
+            // Apply category filter
+            if ("TV_SHOWS".equals(selectedFilter) && !"TV_SHOW".equals(item.getType())) continue;
+            if ("MOVIES".equals(selectedFilter) && !"MOVIE".equals(item.getType())) continue;
+
+            // Apply search query filter
+            if (!searchQuery.isEmpty()) {
+                String title = item.getTitle() != null ? item.getTitle().toLowerCase() : "";
+                String filename = item.getFileName() != null ? item.getFileName().toLowerCase() : "";
+                if (!title.contains(searchQuery) && !filename.contains(searchQuery)) {
+                    continue;
+                }
+            }
+
+            filtered.add(item);
+        }
+        return filtered;
     }
 
     private void updateHeroBanner(MediaItem item) {

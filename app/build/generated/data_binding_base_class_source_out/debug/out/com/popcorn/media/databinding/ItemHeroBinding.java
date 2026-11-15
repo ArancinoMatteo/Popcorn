@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +23,10 @@ public final class ItemHeroBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final MaterialButton btnHeroInfo;
+  public final LinearLayout btnHeroInfoContainer;
+
+  @NonNull
+  public final LinearLayout btnHeroMyList;
 
   @NonNull
   public final MaterialButton btnHeroPlay;
@@ -31,18 +35,38 @@ public final class ItemHeroBinding implements ViewBinding {
   public final ImageView ivHeroBackdrop;
 
   @NonNull
+  public final LinearLayout llTopCategories;
+
+  @NonNull
+  public final TextView tvChipAll;
+
+  @NonNull
+  public final TextView tvChipMovies;
+
+  @NonNull
+  public final TextView tvChipTvShows;
+
+  @NonNull
   public final TextView tvHeroMeta;
 
   @NonNull
   public final TextView tvHeroTitle;
 
-  private ItemHeroBinding(@NonNull ConstraintLayout rootView, @NonNull MaterialButton btnHeroInfo,
+  private ItemHeroBinding(@NonNull ConstraintLayout rootView,
+      @NonNull LinearLayout btnHeroInfoContainer, @NonNull LinearLayout btnHeroMyList,
       @NonNull MaterialButton btnHeroPlay, @NonNull ImageView ivHeroBackdrop,
-      @NonNull TextView tvHeroMeta, @NonNull TextView tvHeroTitle) {
+      @NonNull LinearLayout llTopCategories, @NonNull TextView tvChipAll,
+      @NonNull TextView tvChipMovies, @NonNull TextView tvChipTvShows, @NonNull TextView tvHeroMeta,
+      @NonNull TextView tvHeroTitle) {
     this.rootView = rootView;
-    this.btnHeroInfo = btnHeroInfo;
+    this.btnHeroInfoContainer = btnHeroInfoContainer;
+    this.btnHeroMyList = btnHeroMyList;
     this.btnHeroPlay = btnHeroPlay;
     this.ivHeroBackdrop = ivHeroBackdrop;
+    this.llTopCategories = llTopCategories;
+    this.tvChipAll = tvChipAll;
+    this.tvChipMovies = tvChipMovies;
+    this.tvChipTvShows = tvChipTvShows;
     this.tvHeroMeta = tvHeroMeta;
     this.tvHeroTitle = tvHeroTitle;
   }
@@ -74,9 +98,15 @@ public final class ItemHeroBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btn_hero_info;
-      MaterialButton btnHeroInfo = ViewBindings.findChildViewById(rootView, id);
-      if (btnHeroInfo == null) {
+      id = R.id.btn_hero_info_container;
+      LinearLayout btnHeroInfoContainer = ViewBindings.findChildViewById(rootView, id);
+      if (btnHeroInfoContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_hero_my_list;
+      LinearLayout btnHeroMyList = ViewBindings.findChildViewById(rootView, id);
+      if (btnHeroMyList == null) {
         break missingId;
       }
 
@@ -92,6 +122,30 @@ public final class ItemHeroBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.ll_top_categories;
+      LinearLayout llTopCategories = ViewBindings.findChildViewById(rootView, id);
+      if (llTopCategories == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_chip_all;
+      TextView tvChipAll = ViewBindings.findChildViewById(rootView, id);
+      if (tvChipAll == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_chip_movies;
+      TextView tvChipMovies = ViewBindings.findChildViewById(rootView, id);
+      if (tvChipMovies == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_chip_tv_shows;
+      TextView tvChipTvShows = ViewBindings.findChildViewById(rootView, id);
+      if (tvChipTvShows == null) {
+        break missingId;
+      }
+
       id = R.id.tv_hero_meta;
       TextView tvHeroMeta = ViewBindings.findChildViewById(rootView, id);
       if (tvHeroMeta == null) {
@@ -104,8 +158,9 @@ public final class ItemHeroBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemHeroBinding((ConstraintLayout) rootView, btnHeroInfo, btnHeroPlay,
-          ivHeroBackdrop, tvHeroMeta, tvHeroTitle);
+      return new ItemHeroBinding((ConstraintLayout) rootView, btnHeroInfoContainer, btnHeroMyList,
+          btnHeroPlay, ivHeroBackdrop, llTopCategories, tvChipAll, tvChipMovies, tvChipTvShows,
+          tvHeroMeta, tvHeroTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

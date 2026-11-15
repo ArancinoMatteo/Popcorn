@@ -1,72 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/netflix_black">
 
-    <!-- Top App Bar -->
-    <com.google.android.material.appbar.AppBarLayout
+    <!-- Top App Bar (Netflix Floating Header) -->
+    <LinearLayout
+        android:id="@+id/top_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#D0141414"
-        app:elevation="0dp">
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:background="#A0141414"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingHorizontal="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:letterSpacing="0.05"
+            android:text="POPCORN"
+            android:textColor="@color/netflix_red"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-            <!-- Logo Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🍿 POPCORN"
-                android:textColor="@color/netflix_red"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/btn_import_folder"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/import_folder"
+            android:src="@android:drawable/ic_input_add"
+            app:tint="@color/white" />
 
-            <!-- Action Buttons Container -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/btn_top_settings"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings"
+            android:src="@android:drawable/ic_menu_preferences"
+            app:tint="@color/white" />
 
-                <ImageButton
-                    android:id="@+id/btn_import_folder"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/import_folder"
-                    android:src="@android:drawable/ic_input_add"
-                    app:tint="@color/white" />
+    </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/btn_settings"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/settings"
-                    android:src="@android:drawable/ic_menu_preferences"
-                    app:tint="@color/white" />
-
-            </LinearLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- Swipe Refresh Layout -->
+    <!-- Main Content Container (Swipe Refresh + NestedScrollView) -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_above="@id/bottom_navigation"
+        android:layout_alignParentTop="true">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -83,11 +72,41 @@
                     android:id="@+id/hero_banner"
                     layout="@layout/item_hero" />
 
+                <!-- Search Container (Shown when Search tab active) -->
+                <LinearLayout
+                    android:id="@+id/ll_search_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeColor="@color/netflix_red"
+                        app:hintTextColor="@color/text_secondary"
+                        app:startIconDrawable="@drawable/ic_nav_search"
+                        app:startIconTint="@color/text_secondary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_search_query"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Cerca film, serie TV..."
+                            android:inputType="text"
+                            android:textColor="@color/white" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
                 <!-- Empty View -->
                 <LinearLayout
                     android:id="@+id/ll_empty_state"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="260dp"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="24dp"
@@ -113,7 +132,7 @@
 
                 </LinearLayout>
 
-                <!-- Vertical RecyclerView for Rows -->
+                <!-- Vertical RecyclerView for Netflix Rows -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_main_rows"
                     android:layout_width="match_parent"
@@ -134,8 +153,9 @@
         android:id="@+id/ll_scan_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#E61F1F1F"
+        android:layout_above="@id/bottom_navigation"
+        android:background="#F01F1F1F"
+        android:elevation="6dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
@@ -158,4 +178,18 @@
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!-- Netflix Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#121212"
+        app:elevation="8dp"
+        app:itemIconTint="@color/bottom_nav_color_selector"
+        app:itemRippleColor="@null"
+        app:itemTextColor="@color/bottom_nav_color_selector"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

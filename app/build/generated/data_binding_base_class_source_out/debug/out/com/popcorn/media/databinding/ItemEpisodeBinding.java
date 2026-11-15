@@ -4,6 +4,7 @@ package com.popcorn.media.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -20,19 +21,19 @@ public final class ItemEpisodeBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
-  public final TextView tvEpisodeFilename;
+  public final ImageView ivEpisodeThumb;
 
   @NonNull
-  public final TextView tvEpisodeNumber;
+  public final TextView tvEpisodeFilename;
 
   @NonNull
   public final TextView tvEpisodeTitle;
 
-  private ItemEpisodeBinding(@NonNull LinearLayout rootView, @NonNull TextView tvEpisodeFilename,
-      @NonNull TextView tvEpisodeNumber, @NonNull TextView tvEpisodeTitle) {
+  private ItemEpisodeBinding(@NonNull LinearLayout rootView, @NonNull ImageView ivEpisodeThumb,
+      @NonNull TextView tvEpisodeFilename, @NonNull TextView tvEpisodeTitle) {
     this.rootView = rootView;
+    this.ivEpisodeThumb = ivEpisodeThumb;
     this.tvEpisodeFilename = tvEpisodeFilename;
-    this.tvEpisodeNumber = tvEpisodeNumber;
     this.tvEpisodeTitle = tvEpisodeTitle;
   }
 
@@ -63,15 +64,15 @@ public final class ItemEpisodeBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.tv_episode_filename;
-      TextView tvEpisodeFilename = ViewBindings.findChildViewById(rootView, id);
-      if (tvEpisodeFilename == null) {
+      id = R.id.iv_episode_thumb;
+      ImageView ivEpisodeThumb = ViewBindings.findChildViewById(rootView, id);
+      if (ivEpisodeThumb == null) {
         break missingId;
       }
 
-      id = R.id.tv_episode_number;
-      TextView tvEpisodeNumber = ViewBindings.findChildViewById(rootView, id);
-      if (tvEpisodeNumber == null) {
+      id = R.id.tv_episode_filename;
+      TextView tvEpisodeFilename = ViewBindings.findChildViewById(rootView, id);
+      if (tvEpisodeFilename == null) {
         break missingId;
       }
 
@@ -81,7 +82,7 @@ public final class ItemEpisodeBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemEpisodeBinding((LinearLayout) rootView, tvEpisodeFilename, tvEpisodeNumber,
+      return new ItemEpisodeBinding((LinearLayout) rootView, ivEpisodeThumb, tvEpisodeFilename,
           tvEpisodeTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
