@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="netflix_black">#141414</color>
+    <color name="netflix_card_bg">#1F1F1F</color>
+    <color name="netflix_red">#E50914</color>
+    <color name="netflix_dark_red">#B81D24</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3B3B3</color>
+    <color name="transparent">#00000000</color>
+    <color name="hero_overlay_start">#90000000</color>
+    <color name="hero_overlay_end">#141414</color>
+    <color name="progress_red">#E50914</color>
+    <color name="progress_bg">#404040</color>
+</resources>

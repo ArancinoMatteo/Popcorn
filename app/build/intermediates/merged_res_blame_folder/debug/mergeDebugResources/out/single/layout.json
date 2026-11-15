@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/item_hero.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/item_hero.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/item_media_row.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/item_media_row.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/item_episode.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/item_episode.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/activity_player.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/activity_player.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/custom_player_controls.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/custom_player_controls.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/activity_main.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/item_media_card.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/item_media_card.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/activity_settings.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-mergeDebugResources-39:/layout/bottom_sheet_media_detail.xml",
+        "source": "com.popcorn.media.app-main-42:/layout/bottom_sheet_media_detail.xml"
+    }
+]

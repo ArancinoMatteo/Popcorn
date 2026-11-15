@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Popcorn</string>
+    <string name="title_settings">Impostazioni</string>
+    <string name="play">Riproduci</string>
+    <string name="info">Info</string>
+    <string name="continue_watching">Continua a guardare</string>
+    <string name="recently_added">Aggiunti di recente</string>
+    <string name="movies">Film</string>
+    <string name="tv_shows">Serie TV</string>
+    <string name="import_folder">Importa cartella</string>
+    <string name="scan_library">Scansiona libreria</string>
+    <string name="settings">Impostazioni</string>
+    <string name="tmdb_api_key">TMDB API Key</string>
+    <string name="save">Salva</string>
+    <string name="episodes">Episodi</string>
+    <string name="season">Stagione</string>
+    <string name="overview">Trama</string>
+    <string name="no_media_found">Nessun video trovato nella libreria. Tocca + per importare le tue cartelle!</string>
+    <string name="scanning_files">Scansione e recupero metadati in corso...</string>
+    <string name="re_match">Aggiorna Metadati</string>
+    <string name="clear_library">Svuota Libreria</string>
+</resources>

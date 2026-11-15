@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_bottom_sheet_media_detail.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/bottom_sheet_media_detail.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_item_episode.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/item_episode.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/drawable_bg_circle_number.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/drawable/bg_circle_number.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_activity_player.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/activity_player.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_item_hero.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/item_hero.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/drawable_progress_bar_red.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/drawable/progress_bar_red.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_item_media_card.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/item_media_card.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/drawable_hero_gradient_overlay.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/drawable/hero_gradient_overlay.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_activity_settings.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_item_media_row.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/item_media_row.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_activity_main.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.popcorn.media.app-debug-40:/layout_custom_player_controls.xml.flat",
+        "source": "com.popcorn.media.app-main-42:/layout/custom_player_controls.xml"
+    }
+]

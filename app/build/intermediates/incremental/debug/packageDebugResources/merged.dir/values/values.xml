@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="hero_overlay_end">#141414</color>
+    <color name="hero_overlay_start">#90000000</color>
+    <color name="netflix_black">#141414</color>
+    <color name="netflix_card_bg">#1F1F1F</color>
+    <color name="netflix_dark_red">#B81D24</color>
+    <color name="netflix_red">#E50914</color>
+    <color name="progress_bg">#404040</color>
+    <color name="progress_red">#E50914</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3B3B3</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Popcorn</string>
+    <string name="clear_library">Svuota Libreria</string>
+    <string name="continue_watching">Continua a guardare</string>
+    <string name="episodes">Episodi</string>
+    <string name="import_folder">Importa cartella</string>
+    <string name="info">Info</string>
+    <string name="movies">Film</string>
+    <string name="no_media_found">Nessun video trovato nella libreria. Tocca + per importare le tue cartelle!</string>
+    <string name="overview">Trama</string>
+    <string name="play">Riproduci</string>
+    <string name="re_match">Aggiorna Metadati</string>
+    <string name="recently_added">Aggiunti di recente</string>
+    <string name="save">Salva</string>
+    <string name="scan_library">Scansiona libreria</string>
+    <string name="scanning_files">Scansione e recupero metadati in corso...</string>
+    <string name="season">Stagione</string>
+    <string name="settings">Impostazioni</string>
+    <string name="title_settings">Impostazioni</string>
+    <string name="tmdb_api_key">TMDB API Key</string>
+    <string name="tv_shows">Serie TV</string>
+    <style name="Theme.Popcorn" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        
+        <item name="colorPrimary">@color/netflix_red</item>
+        <item name="colorPrimaryVariant">@color/netflix_dark_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <item name="colorSecondary">@color/netflix_red</item>
+        <item name="colorSecondaryVariant">@color/netflix_dark_red</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <item name="android:statusBarColor">@color/netflix_black</item>
+        <item name="android:windowBackground">@color/netflix_black</item>
+    </style>
+    <style name="Theme.Popcorn.Fullscreen" parent="Theme.Popcorn">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>
